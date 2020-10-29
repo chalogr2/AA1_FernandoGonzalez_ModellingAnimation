@@ -1,7 +1,11 @@
-AA1_FernandoGonzalez_ModellingAnimation
+# Robot Arm Controller
 
-Team Description:
-Member: Fernando González Ruiz
-Team number ID: 20
-eMail: fernando.gonzalez@enti.cat
-Picture:
+### Team Description
+
+- Member: Fernando González Ruiz
+- Group ID: 20
+- Member eMail : fernando.gonzalez@enti.cat
+- Picture:
+
+![](https://i.imgur.com/g2Rn38C.png)
+
