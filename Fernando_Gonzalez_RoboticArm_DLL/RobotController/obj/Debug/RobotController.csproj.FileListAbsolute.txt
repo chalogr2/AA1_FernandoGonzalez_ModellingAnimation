@@ -1,0 +1,8 @@
+C:\Users\USER\Documents\ENTI UB\ENTI20202\Modelado y Animacion\Repositories Modelado y Animacion\AA1_FernandoGonzalez_ModellingAnimation\Fernando_Gonzalez_RoboticArm_DLL\RobotController\bin\Debug\RobotController.dll
+C:\Users\USER\Documents\ENTI UB\ENTI20202\Modelado y Animacion\Repositories Modelado y Animacion\AA1_FernandoGonzalez_ModellingAnimation\Fernando_Gonzalez_RoboticArm_DLL\RobotController\bin\Debug\RobotController.pdb
+C:\Users\USER\Documents\ENTI UB\ENTI20202\Modelado y Animacion\Repositories Modelado y Animacion\AA1_FernandoGonzalez_ModellingAnimation\Fernando_Gonzalez_RoboticArm_DLL\RobotController\bin\Debug\UnityEngine.dll
+C:\Users\USER\Documents\ENTI UB\ENTI20202\Modelado y Animacion\Repositories Modelado y Animacion\AA1_FernandoGonzalez_ModellingAnimation\Fernando_Gonzalez_RoboticArm_DLL\RobotController\bin\Debug\UnityEngine.xml
+C:\Users\USER\Documents\ENTI UB\ENTI20202\Modelado y Animacion\Repositories Modelado y Animacion\AA1_FernandoGonzalez_ModellingAnimation\Fernando_Gonzalez_RoboticArm_DLL\RobotController\obj\Debug\RobotController.csprojAssemblyReference.cache
+C:\Users\USER\Documents\ENTI UB\ENTI20202\Modelado y Animacion\Repositories Modelado y Animacion\AA1_FernandoGonzalez_ModellingAnimation\Fernando_Gonzalez_RoboticArm_DLL\RobotController\obj\Debug\RobotController.csproj.CopyComplete
+C:\Users\USER\Documents\ENTI UB\ENTI20202\Modelado y Animacion\Repositories Modelado y Animacion\AA1_FernandoGonzalez_ModellingAnimation\Fernando_Gonzalez_RoboticArm_DLL\RobotController\obj\Debug\RobotController.dll
+C:\Users\USER\Documents\ENTI UB\ENTI20202\Modelado y Animacion\Repositories Modelado y Animacion\AA1_FernandoGonzalez_ModellingAnimation\Fernando_Gonzalez_RoboticArm_DLL\RobotController\obj\Debug\RobotController.pdb
