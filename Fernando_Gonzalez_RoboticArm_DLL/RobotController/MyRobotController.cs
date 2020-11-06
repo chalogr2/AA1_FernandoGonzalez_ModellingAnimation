@@ -37,13 +37,15 @@ namespace RobotController
         MyQuat quati1, quati2, quati3, quati4; //initial rotations (excercise 1)
         MyQuat quati5, quati6, quati7, quati8;
 
-        int timeAnim1 = 0;
-        int currentTime = 0;
-        int timeframe = 16;
+        int timeAtStart;
 
         float angle1 = 0;
         float angle2 = 0;
         float angle3 = 110;
+
+        float angle1s = 0;
+        float angle2s = 0;
+        float angle3s = 110;
 
         float angle1g = -57;
         float angle2g = 3;
@@ -112,6 +114,7 @@ namespace RobotController
             rot3 = quati4;
 
             inPosition = true;
+            timeAtStart = TimeSinceMidnight;
         }
 
 
@@ -153,38 +156,31 @@ namespace RobotController
 
             if (myCondition)
             {
-                currentTime = TimeSinceMidnight;
-                if (timeAnim1 <= currentTime)
+                if (angle1 > angle1g - .5)
                 {
-                    if (angle1 > angle1g)
-                    {
-                        angle1 = angle1 - 5f;
-                    }
-                    else
-                    {
-                        arrive1 = true;
-                    }
+                    angle1 = Lerp(angle1s, angle1g, .0006f * (TimeSinceMidnight - timeAtStart));
+                }
+                else
+                {
+                    arrive1 = true;
+                }
 
-                    if (angle2 < angle2g)
-                    {
-                        angle2 = angle2 + 5f;
-                    }
-                    else
-                    {
-                        arrive2 = true;
-                    }
+                if (angle2 < angle2g + .5)
+                {
+                    angle2 = Lerp(angle2s, angle2g, .0006f * (TimeSinceMidnight - timeAtStart));
+                }
+                else
+                {
+                    arrive2 = true;
+                }
 
-                    if (angle3 > angle3g)
-                    {
-                        angle3 = angle3 - 5f;
-                    }
-                    else
-                    {
-                        arrive3 = true;
-                    }
-
-                    timeAnim1 = TimeSinceMidnight + timeframe * 2;
-                    Debug.Log(angle1);
+                if (angle3 > angle3g - .5)
+                {
+                    angle3 = Lerp(angle3s, angle3g, .0006f * (TimeSinceMidnight - timeAtStart));
+                }
+                else
+                {
+                    arrive3 = true;
                 }
 
                 quati5 = emptyQuaternion(); //0
@@ -395,6 +391,11 @@ namespace RobotController
             q.z = -q.z;
 
             return q;
+        }
+
+        internal float Lerp(float starting, float ending, float margin)
+        {
+            return starting * (1 - margin) + ending * margin;
         }
 
         #endregion
