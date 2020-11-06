@@ -1,5 +1,7 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -30,6 +32,33 @@ namespace RobotController
 
     public class MyRobotController
     {
+        #region class variables
+
+        MyQuat quati1, quati2, quati3, quati4; //initial rotations (excercise 1)
+        MyQuat quati5, quati6, quati7, quati8;
+        MyQuat quati9, quati10, quati11, quati12;
+
+        static int timeAtStart = 0;
+
+        float angle1 = 0;
+        float angle2 = 0;
+        float angle3 = 110;
+
+        float angle1s = 0;
+        float angle2s = 0;
+        float angle3s = 110;
+
+        float angle1g = -57;
+        float angle2g = 3;
+        float angle3g = 80;
+
+        bool myCondition = false;
+        bool inPosition = false;
+        bool arrive1 = false;
+        bool arrive2 = false;
+        bool arrive3 = false;
+
+        #endregion
 
         #region public methods
 
@@ -46,13 +75,47 @@ namespace RobotController
 
         //EX1: this function will place the robot in the initial position
 
-        public void PutRobotStraight(out MyQuat rot0, out MyQuat rot1, out MyQuat rot2, out MyQuat rot3) {
+        public void PutRobotStraight(out MyQuat rot0, out MyQuat rot1, out MyQuat rot2, out MyQuat rot3)
+        {
 
             //todo: change this, use the function Rotate declared below
-            rot0 = NullQ;
-            rot1 = NullQ;
-            rot2 = NullQ;
-            rot3 = NullQ;
+
+
+            MyVec rotA1, rotA2, rotA3, rotA4;
+
+            rotA1.x = 0;
+            rotA1.y = 1;
+            rotA1.z = 0;
+
+            rotA2.x = 0;
+            rotA2.y = 0;
+            rotA2.z = 0;
+
+            rotA3.x = 1;
+            rotA3.y = 0;
+            rotA3.z = 0;
+
+            rotA4.x = 0;
+            rotA4.y = 0;
+            rotA4.z = 1;
+
+            quati1 = emptyQuaternion(); //0
+            quati1 = Rotate(quati1, rotA1, 74);
+            rot0 = quati1;
+
+            quati2 = Rotate(rot0, rotA1, 0);
+            rot1 = quati2;
+
+            quati3 = emptyQuaternion();
+            quati3 = Rotate(rot1, rotA3, 60);
+            rot2 = quati3;
+
+            quati4 = emptyQuaternion();
+            quati4 = Rotate(rot1, rotA3, 110);
+            rot3 = quati4;
+
+            inPosition = true;
+            timeAtStart = TimeSinceMidnight;
         }
 
 
@@ -64,24 +127,93 @@ namespace RobotController
         public bool PickStudAnim(out MyQuat rot0, out MyQuat rot1, out MyQuat rot2, out MyQuat rot3)
         {
 
-            bool myCondition = false;
+            MyVec rotA1, rotA2, rotA3, rotA4;
+
+            rotA1.x = 0;
+            rotA1.y = 1;
+            rotA1.z = 0;
+
+            rotA2.x = 0;
+            rotA2.y = 0;
+            rotA2.z = 0;
+
+            rotA3.x = 1;
+            rotA3.y = 0;
+            rotA3.z = 0;
+
+            rotA4.x = 0;
+            rotA4.y = 0;
+            rotA4.z = 1;
+
+            if (inPosition)
+            {
+                myCondition = true;
+                inPosition = false;
+                //timeAnim1 = TimeSinceMidnight + timeframe;
+            }
             //todo: add a check for your condition
 
 
 
             if (myCondition)
             {
-                //todo: add your code here
-                rot0 = NullQ;
-                rot1 = NullQ;
-                rot2 = NullQ;
-                rot3 = NullQ;
 
+                if (angle1 > angle1g - .5)
+                {
+                    angle1 = Lerp(angle1s, angle1g, .0006f * (TimeSinceMidnight - timeAtStart));
+                }
+                else
+                {
+                    arrive1 = true;
+                }
+
+                if (angle2 < angle2g + .5)
+                {
+                    angle2 = Lerp(angle2s, angle2g, .0006f * (TimeSinceMidnight - timeAtStart));
+                }
+                else
+                {
+                    arrive2 = true;
+                }
+
+                if (angle3 > angle3g - .5)
+                {
+                    angle3 = Lerp(angle3s, angle3g, .0006f * (TimeSinceMidnight - timeAtStart));
+                }
+                else
+                {
+                    arrive3 = true;
+                }
+
+
+
+                quati5 = emptyQuaternion(); //0
+                quati5 = Rotate(quati1, rotA1, angle1);
+                rot0 = quati5;
+
+                quati6 = Rotate(rot0, rotA3, angle2);
+                rot1 = quati6;
+
+                quati7 = emptyQuaternion();
+                quati7 = Rotate(rot0, rotA3, 60);
+                rot2 = quati7;
+
+                quati8 = emptyQuaternion();
+                quati8 = Rotate(rot0, rotA3, angle3);
+                rot3 = quati8;
+
+                if (arrive1 && arrive2 && arrive3)
+                {
+                    myCondition = false;
+                    angle1 = 0;
+                    angle2 = 0;
+                    angle3 = 110;
+                    arrive1 = arrive2 = arrive3 = false;
+                }
 
                 return true;
             }
 
-            //todo: remove this once your code works.
             rot0 = NullQ;
             rot1 = NullQ;
             rot2 = NullQ;
@@ -98,19 +230,93 @@ namespace RobotController
         public bool PickStudAnimVertical(out MyQuat rot0, out MyQuat rot1, out MyQuat rot2, out MyQuat rot3)
         {
 
-            bool myCondition = false;
+            MyVec rotA1, rotA2, rotA3, rotA4;
+
+            rotA1.x = 0;
+            rotA1.y = 1;
+            rotA1.z = 0;
+
+            rotA2.x = 0;
+            rotA2.y = 0;
+            rotA2.z = 0;
+
+            rotA3.x = 1;
+            rotA3.y = 0;
+            rotA3.z = 0;
+
+            rotA4.x = 0;
+            rotA4.y = 0;
+            rotA4.z = 1;
+
+            if (inPosition)
+            {
+                myCondition = true;
+                inPosition = false;
+                //timeAnim1 = TimeSinceMidnight + timeframe;
+            }
             //todo: add a check for your condition
 
 
 
-            while (myCondition)
+            if (myCondition)
             {
-                //todo: add your code here
+
+                if (angle1 > angle1g - .5)
+                {
+                    angle1 = Lerp(angle1s, angle1g, .0006f * (TimeSinceMidnight - timeAtStart));
+                }
+                else
+                {
+                    arrive1 = true;
+                }
+
+                if (angle2 < 30 + .5)
+                {
+                    angle2 = Lerp(angle2s, 30, .0006f * (TimeSinceMidnight - timeAtStart));
+                }
+                else
+                {
+                    arrive2 = true;
+                }
+
+                if (angle3 > angle3g - .5)
+                {
+                    angle3 = Lerp(angle3s, angle3g, .0006f * (TimeSinceMidnight - timeAtStart));
+                }
+                else
+                {
+                    arrive3 = true;
+                }
 
 
+
+                quati9 = emptyQuaternion(); //0
+                quati9 = Rotate(quati1, rotA1, angle1);
+                rot0 = quati9;
+
+                quati10 = Rotate(rot0, rotA3, angle2);
+                rot1 = quati10;
+
+                quati11 = emptyQuaternion();
+                quati11 = Rotate(rot0, rotA3, 60);
+                rot2 = quati11;
+
+                quati12 = emptyQuaternion();
+                quati12 = Rotate(rot0, rotA3, angle3);
+                rot3 = quati12;
+
+                if (arrive1 && arrive2 && arrive3)
+                {
+                    myCondition = false;
+                    angle1 = 0;
+                    angle2 = 0;
+                    angle3 = 110;
+                    arrive1 = arrive2 = arrive3 = false;
+                }
+
+                return true;
             }
 
-            //todo: remove this once your code works.
             rot0 = NullQ;
             rot1 = NullQ;
             rot2 = NullQ;
@@ -122,16 +328,57 @@ namespace RobotController
 
         public static MyQuat GetSwing(MyQuat rot3)
         {
-            //todo: change the return value for exercise 3
-            return NullQ;
+            //it's done in the pickstudanimvertical function
+            return rot3;
 
         }
 
 
         public static MyQuat GetTwist(MyQuat rot3)
         {
+
+            float angle1 = 0;
+            float angle2 = 0;
+            float angle3 = 33;
+            float dangle3 = 33;
+
+            float angle1s = 0;
+            float angle2s = 0;
+            float angle3s = 40;
+
+            float angle1g = -57;
+            float angle2g = 3;
+            float angle3g = 10;
+
+            if (angle3 > angle3g + .5)
+            {
+                angle3 = Lerp(angle3s, angle3g, .002f * (TimeSinceMidnight - timeAtStart));
+            }
+
+
             //todo: change the return value for exercise 3
-            return NullQ;
+            MyVec rotA1, rotA2, rotA3, rotA4;
+            rotA1.x = 0;
+            rotA1.y = 1;
+            rotA1.z = 0;
+
+            rotA2.x = 0;
+            rotA2.y = 0;
+            rotA2.z = 0;
+
+            rotA3.x = 1;
+            rotA3.y = 0;
+            rotA3.z = 0;
+
+            rotA4.x = 0;
+            rotA4.y = 0;
+            rotA4.z = 1;
+
+            MyQuat result;
+            result = Rotate(rot3, rotA1, angle3);
+
+
+            return result;
 
         }
 
@@ -143,7 +390,8 @@ namespace RobotController
 
         #region private and internal methods
 
-        internal int TimeSinceMidnight { get { return (DateTime.Now.Hour * 3600000) + (DateTime.Now.Minute * 60000) + (DateTime.Now.Second * 1000) + DateTime.Now.Millisecond; } }
+        internal static int TimeSinceMidnight { get { return (DateTime.Now.Hour * 3600000) + (DateTime.Now.Minute * 60000) + (DateTime.Now.Second * 1000) + DateTime.Now.Millisecond; } }
+
 
 
         private static MyQuat NullQ
@@ -160,25 +408,114 @@ namespace RobotController
             }
         }
 
-        internal MyQuat Multiply(MyQuat q1, MyQuat q2) {
+        internal MyQuat emptyQuaternion()
+        {
+            MyQuat quat;
+            quat.w = 1;
+            quat.x = 0;
+            quat.y = 0;
+            quat.z = 0;
 
-            //todo: change this so it returns a multiplication:
-            return NullQ;
-
+            return quat;
         }
 
-        internal MyQuat Rotate(MyQuat currentRotation, MyVec axis, float angle)
+        internal static MyQuat Multiply(MyQuat q1, MyQuat q2)
         {
 
-            //todo: change this so it takes currentRotation, and calculate a new quaternion rotated by an angle "angle" radians along the normalized axis "axis"
-            return NullQ;
+            MyQuat result;
+            MyVec qV1, qV2, rV;
+
+            qV1.x = q1.x;
+            qV1.y = q1.y;
+            qV1.z = q1.z;
+
+            qV2.x = q2.x;
+            qV2.y = q2.y;
+            qV2.z = q2.z;
+
+            result.w = q1.w * q2.w + Vector3DotProduct(qV1, qV2);
+            rV = AddVector3(AddVector3(ScaleVector3(qV1, q2.w), ScaleVector3(qV2, q1.w)), Vector3CrossProduct(qV1, qV2));
+
+            result.x = rV.x;
+            result.y = rV.y;
+            result.z = rV.z;
+
+            return result;
 
         }
 
+        internal static MyQuat Rotate(MyQuat currentRotation, MyVec axis, float angle)
+        {
 
+            //takes currentRotation, and calculates a new quaternion rotated by an angle "angle" along the normalized axis "axis"
 
+            MyQuat result, quat2;
+            MyVec qV2;
 
-        //todo: add here all the functions needed
+            //Create a second quaternion from the axis and angle:
+            float theta = ((float)Math.PI / 180) * angle; //convert euler angle to radians (theta)!!
+            quat2.w = (float)Math.Cos(theta / 2);
+            qV2 = ScaleVector3(axis, (float)Math.Sin(theta / 2));
+            quat2.x = qV2.x;
+            quat2.y = qV2.y;
+            quat2.z = qV2.z;
+
+            //Multiply both quaternions to implement the rotation:
+            result = Multiply(currentRotation, quat2);
+
+            return result;
+
+        }
+
+        internal static float Vector3DotProduct(MyVec v1, MyVec v2)
+        {
+            float result = (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+            return result;
+        }
+
+        internal static MyVec Vector3CrossProduct(MyVec v1, MyVec v2)
+        {
+            MyVec result;
+            result.x = (v1.y * v2.z) - (v1.z * v2.y);
+            result.y = (v1.z * v2.x) - (v1.x * v2.z);
+            result.z = (v1.x * v2.y) - (v1.y * v2.x);
+
+            return result;
+        }
+
+        internal static MyVec ScaleVector3(MyVec v, float scalar)
+        {
+            MyVec result;
+            result.x = v.x * scalar;
+            result.y = v.y * scalar;
+            result.z = v.z * scalar;
+
+            return result;
+        }
+
+        internal static MyVec AddVector3(MyVec v1, MyVec v2)
+        {
+            MyVec result;
+            result.x = v1.x + v2.x;
+            result.y = v1.y + v2.y;
+            result.z = v1.z + v2.z;
+
+            return result;
+        }
+
+        internal static MyQuat InvertQuaternion(MyQuat q)
+        {
+            q.x = -q.x;
+            q.y = -q.y;
+            q.z = -q.z;
+
+            return q;
+        }
+
+        internal static float Lerp(float starting, float ending, float margin)
+        {
+            return starting * (1 - margin) + ending * margin;
+        }
 
         #endregion
 
